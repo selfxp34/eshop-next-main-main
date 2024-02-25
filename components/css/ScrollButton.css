@@ -1,0 +1,23 @@
+.scroll-button {
+  position: fixed;
+  background-color: #8fabca;
+  right: 20px;
+  bottom: 14px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  transition: opacity 0.3s;
+
+}
+
+.scroll-button.show {
+  opacity: 1;
+
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .scroll-button:hover {
+    background-color: #512da8;
+  }
+}
