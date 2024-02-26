@@ -21,11 +21,10 @@ export default function AddToCart({ product }: Props) {
       >
         <Heart />
       </Button>
-      <Button className="w-12 h-9" title="Сравнить">
+      <Button title="Сравнить">
         <BarChart />
       </Button>
       <Button
-        className="w-22 h-9 mr-8"
         onClick={async () => {
           await addToCartAction();
         }}
