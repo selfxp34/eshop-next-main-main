@@ -19,7 +19,6 @@ export default function Carusel() {
               />
             </Link>
           </CarouselItem>
-
           <CarouselItem className="basis-1/5">
             <Link href="./catalog/samsung">
               <Image

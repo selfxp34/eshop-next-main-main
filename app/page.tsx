@@ -3,8 +3,8 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-      <Suspense fallback='Loading...'>
-        <Catalog/>
-      </Suspense>
+    <Suspense fallback="Loading...">
+      <Catalog />
+    </Suspense>
   );
 }
