@@ -1,7 +1,14 @@
 "use client";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as React from "react";
-import { LayoutDashboard, User } from "lucide-react";
+import {
+  LayoutDashboard,
+  User,
+  Cart,
+  ShoppingCart,
+  Heart,
+  PackageSearch,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -35,43 +42,53 @@ export function MainMenu() {
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm">
             <DrawerHeader>
-              <DrawerTitle>New VK 2077</DrawerTitle>
               <DrawerDescription>
-                Next generation social network
+                <p className="flex justify-center mb-3">
+                  <Avatar>
+                    <AvatarImage
+                      src={session.data.user.image ?? undefined}
+                      alt={session.data.user.name ?? undefined}
+                    />
+                  </Avatar>
+                </p>
+                <p className="flex justify-center">
+                  Добро пожаловать! {session.data.user.name}
+                </p>
               </DrawerDescription>
             </DrawerHeader>
+
             <div className="p-4 pb-0">
               <nav>
-                <ul className="flex flex-col gap-3">
+                <ul className="flex  flex-col gap-3 justify-center mb-4">
                   <li>
                     <DrawerClose asChild>
-                      <Link href={"/"} className="flex gap-2">
-                        <LayoutDashboard />
-                        Main page
+                      <Link href={"/profile"} className="flex gap-3">
+                        <User />
+                        Профиль
+                      </Link>
+                    </DrawerClose>
+                  </li>
+                  <li>
+                    <DrawerClose asChild>
+                      <Link href={"/cart"} className="flex gap-3">
+                        <ShoppingCart />
+                        Корзина
                       </Link>
                     </DrawerClose>
                   </li>
                   <li>
                     <DrawerClose asChild>
                       <Link href={"/profile"} className="flex gap-2">
-                        <User />
-                        Profile
+                        <Heart />
+                        Избранное
                       </Link>
                     </DrawerClose>
                   </li>
                   <li>
                     <DrawerClose asChild>
                       <Link href={"/profile"} className="flex gap-2">
-                        <User />
-                        Profile
-                      </Link>
-                    </DrawerClose>
-                  </li>
-                  <li>
-                    <DrawerClose asChild>
-                      <Link href={"/photos"} className="flex gap-2">
-                        <Image />
-                        Photos
+                        <PackageSearch />
+                        Заказы
                       </Link>
                     </DrawerClose>
                   </li>

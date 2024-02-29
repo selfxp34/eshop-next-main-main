@@ -9,10 +9,10 @@ export default async function Catalog() {
   // await wait(2000)
   return (
     <div>
-      <h2 className="text-2xl text-black dark:text-slate-300  pt-3 mb-6 flef text-start ">
+      <h2 className="text-2xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
         Смартфоны в Волгограде
       </h2>
-      <h4 className="text-1xl text-black dark:text-slate-300  pt-3 mb-6 flef text-start ">
+      <h4 className="text-1xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
         Ледеры продаж
       </h4>
 
