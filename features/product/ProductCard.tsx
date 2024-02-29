@@ -25,7 +25,9 @@ export default function ProductCard({ product }: Props) {
     >
       <CardHeader className="flex items-center  justify-between">
         <div className="">
-          <CardTitle className="text-lg  mt-2">{product.name}</CardTitle>
+          <CardTitle className="text-sm  mt-2">
+            <Link href={""}>{product.name}</Link>
+          </CardTitle>
           <CardDescription className="text-xs  mb-2">
             {product.desc}
           </CardDescription>

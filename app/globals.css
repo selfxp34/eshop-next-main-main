@@ -76,7 +76,28 @@
   }
 }
 
-
 nav ul li a.active {
   font-weight: bold;
+}
+
+/* 
+.main {
+  width: 100%;
+  display: flex;
+} */
+
+
+
+
+.image-links {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.image-links a {
+  margin-right: 10px;
+}
+
+.image-links a:last-child {
+  margin-right: 0;
 }

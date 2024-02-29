@@ -6,38 +6,38 @@ import Image from "next/image";
 import React from "react";
 
 export default function CartPage() {
-  const { data: products, isLoading } = useQuery<{ data: Product[] }>({
-    queryKey: ["product"],
+  const { data: cart, isLoading } = useQuery<{ data: Product[] }>({
+    queryKey: ["key"],
     queryFn: () => {
-      return fetch("/api/product").then((res) => res.json());
+      return fetch("/api/cart").then((res) => res.json());
     },
   });
   if (isLoading) return <div>Loading...</div>;
-  if (!products) return <div>Load error</div>;
+  if (!cart) return <div>Load error</div>;
   return (
     <div className="container mx-auto py-8">
       <h2 className="text-2xl font-bold mb-4">Products</h2>
       <ul className="flex flex-col gap-4">
-        {products.data.map((product) => {
+        {cart.data.map((cartItem) => {
           return (
             <li
-              key={product.id}
+              key={cartItem.id}
               className="bg-white p-4 shadow rounded-lg flex items-center"
             >
               <div className="mr-4">
                 <Image
-                  src={product.img}
-                  alt={product.name}
+                  src={cartItem.img}
+                  alt={cartItem.name}
                   width={500}
                   height={300}
                   className="w-32 h-32 object-cover"
                 />
               </div>
               <div className="flex-grow">
-                <h3 className="text-lg font-semibold">{product.name}</h3>
-                <p className="text-gray-500">{product.desc}</p>
+                <h3 className="text-lg font-semibold">{cartItem.name}</h3>
+                <p className="text-gray-500">{cartItem.desc}</p>
               </div>
-              <p className="text-gray-500">${product.price}</p>
+              <p className="text-gray-500">${cartItem.price}</p>
             </li>
           );
         })}

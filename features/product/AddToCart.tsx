@@ -25,7 +25,17 @@ export default function AddToCart({ product }: Props) {
       <Button
         className="center-button bg-green-600"
         onClick={async () => {
-          await addToCartAction();
+          // await addToCartAction(product.id);
+          fetch("/api/cart", {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              productId: product.id,
+              quantity: 1,
+            }),
+          });
         }}
       >
         В корзину
