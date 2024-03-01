@@ -71,8 +71,17 @@
     @apply border-border;
   }
 
+  html,
+  body,
+  main {
+    height: 100%;
+    margin: 0;
+  }
+
   body {
     @apply bg-background text-foreground;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -80,13 +89,13 @@ nav ul li a.active {
   font-weight: bold;
 }
 
-/* 
-.main {
+
+footer {
   width: 100%;
   display: flex;
-} */
-
-
+  position: fixed;
+  bottom: 0;
+}
 
 
 .image-links {
