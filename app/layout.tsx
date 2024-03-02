@@ -9,6 +9,11 @@ import ScrollButton from "@/components/ScrollButton";
 import AppBar from "@/components/AppBar";
 
 import Link from "next/link";
+import Menu from "@/components/Menu";
+
+import { ToastProvider } from "@radix-ui/react-toast";
+import { Toaster } from "@/components/ui/toaster";
+// import { NavigationMenu } from "@/components/ui/navigation-menu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +35,11 @@ export default function RootLayout({
           <Carusel />
           <main className="container py-6">{children}</main>
         </Providers>
+        <Menu />
 
         <Footer />
         <ScrollButton />
+        <Toaster />
       </body>
     </html>
   );

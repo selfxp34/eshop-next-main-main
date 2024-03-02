@@ -1,47 +1,115 @@
 "use client";
-
-import { Product } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import React from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Cart, cartSchema } from "./cart-schema";
+import { useToast } from "@/components/ui/use-toast";
+import Image from "next/image";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Heart, Trash2 } from "lucide-react";
 
 export default function CartPage() {
-  const { data: products, isLoading } = useQuery<{ data: Product[] }>({
-    queryKey: ["product"],
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    data: cart,
+    isLoading,
+    isError,
+  } = useQuery<Cart | undefined>({
+    queryKey: ["cart"],
     queryFn: () => {
-      return fetch("/api/product").then((res) => res.json());
+      return fetch("/api/cart")
+        .then((res) => {
+          if (!res.ok) throw new Error("Network response was not ok");
+          return res.json();
+        })
+        .then((data) => {
+          return cartSchema.parse(data);
+        })
+        .catch((error) => {
+          toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive",
+          });
+          return undefined;
+        });
     },
   });
   if (isLoading) return <div>Loading...</div>;
-  if (!products) return <div>Load error</div>;
+  if (isError) return <div>Error</div>;
+  if (!cart) return <div>Load error</div>;
+  const formattedCart: {
+    productImg: string;
+    productId: number;
+    productName: string;
+    productDesc: string;
+    productPrice: number;
+    quantity: number;
+  }[] = [];
+  cart.cart.forEach((cartItem) => {
+    formattedCart.unshift({
+      productImg: cartItem.ProductCart[0].Product.img,
+      productId: cartItem.ProductCart[0].productId,
+      productName: cartItem.ProductCart[0].Product.name,
+      productDesc: cartItem.ProductCart[0].Product.desc,
+      productPrice: cartItem.ProductCart[0].Product.price,
+      quantity: cartItem.ProductCart[0].quantity,
+    });
+  });
   return (
-    <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-4">Products</h2>
-      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-1">
-        {products.data.map((product) => {
-          return (
-            <li
-              key={product.id}
-              className="dark:hover:bg-sky-700 hover:bg-slate-200 transition-transform hover:-translate-y-1 "
-            >
-              <div className="mr-4">
-                <Image
-                  src={product.img}
-                  alt={product.name}
-                  width={500}
-                  height={300}
-                  className="w-32 h-32 object-cover"
-                />
-              </div>
-              <div className="flex-grow">
-                <h3 className="text-lg font-semibold">{product.name}</h3>
-                <p className="text-gray-500">{product.desc}</p>
-              </div>
-              <p className="text-gray-500">${product.price}</p>
-            </li>
-          );
-        })}
-      </ul>
+    <div>
+      <h2>Cart</h2>
+      <div className="flex flex-col gap-4">
+        {formattedCart.map((cartItem) => (
+          <Card key={cartItem.productId} className="flex items-center gap-4">
+            <div>
+              <Image
+                src={cartItem.productImg}
+                alt={cartItem.productName}
+                width={150}
+                height={150}
+              />
+            </div>
+            <div className="flex-grow">
+              <h3>{cartItem.productName}</h3>
+              <p>{cartItem.productDesc}</p>
+              <p>{cartItem.productPrice}</p>
+              <p>{cartItem.quantity}</p>
+            </div>
+            <div className="flex gap-2">
+              <Button>
+                <Heart />
+              </Button>
+              <Button
+                size={"default"}
+                variant={"destructive"}
+                onClick={() => {
+                  fetch("/api/cart", {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      productId: cartItem.productId,
+                    }),
+                  }).then((res) => {
+                    if (!res.ok) throw new Error("Network response was not ok");
+                    queryClient.invalidateQueries({ queryKey: ["cart"] });
+                    toast({
+                      title: "Успешно",
+                      description: "Товар удалён",
+                      variant: "destructive",
+                    });
+                  });
+                }}
+              >
+                <Trash2 />
+              </Button>
+            </div>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
