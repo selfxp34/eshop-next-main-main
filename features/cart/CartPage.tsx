@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Heart, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 export default function CartPage() {
   const { toast } = useToast();
@@ -36,79 +36,116 @@ export default function CartPage() {
         });
     },
   });
+
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
   if (!cart) return <div>Load error</div>;
-  const formattedCart: {
-    productImg: string;
-    productId: number;
-    productName: string;
-    productDesc: string;
-    productPrice: number;
-    quantity: number;
-  }[] = [];
-  cart.cart.forEach((cartItem) => {
-    formattedCart.unshift({
-      productImg: cartItem.ProductCart[0].Product.img,
+
+  const handleDeleteItem = (productId: number) => {
+    fetch("/api/cart", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        productId: productId,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        queryClient.invalidateQueries({ queryKey: ["cart"] });
+        toast({
+          title: "Success",
+          description: "Item removed from cart",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      });
+  };
+
+  const handleDeleteCart = () => {
+    Promise.all(
+      cart.cart.map((cartItem) => {
+        return fetch("/api/cart", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            productId: cartItem.ProductCart[0].productId,
+          }),
+        }).then((res) => {
+          if (!res.ok) throw new Error("Network response was not ok");
+        });
+      })
+    )
+      .then(() => {
+        queryClient.invalidateQueries({ queryKey: ["cart"] });
+        toast({
+          title: "Success",
+          description: "Cart deleted",
+          variant: "destructive",
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+      });
+  };
+
+  const formattedCart = cart.cart.map((cartItem) => {
+    return {
       productId: cartItem.ProductCart[0].productId,
       productName: cartItem.ProductCart[0].Product.name,
       productDesc: cartItem.ProductCart[0].Product.desc,
       productPrice: cartItem.ProductCart[0].Product.price,
       quantity: cartItem.ProductCart[0].quantity,
-    });
+      productImg: cartItem.ProductCart[0].Product.img,
+    };
   });
+
   return (
     <div>
       <h2>Cart</h2>
       <div className="flex flex-col gap-4">
         {formattedCart.map((cartItem) => (
-          <Card key={cartItem.productId} className="flex items-center gap-4">
-            <div>
-              <Image
-                src={cartItem.productImg}
-                alt={cartItem.productName}
-                width={150}
-                height={150}
-              />
-            </div>
-            <div className="flex-grow">
-              <h3>{cartItem.productName}</h3>
-              <p>{cartItem.productDesc}</p>
-              <p>{cartItem.productPrice}</p>
-              <p>{cartItem.quantity}</p>
-            </div>
-            <div className="flex gap-2">
-              <Button>
-                <Heart />
-              </Button>
-              <Button
-                size={"default"}
-                variant={"destructive"}
-                onClick={() => {
-                  fetch("/api/cart", {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      productId: cartItem.productId,
-                    }),
-                  }).then((res) => {
-                    if (!res.ok) throw new Error("Network response was not ok");
-                    queryClient.invalidateQueries({ queryKey: ["cart"] });
-                    toast({
-                      title: "Успешно",
-                      description: "Товар удалён",
-                      variant: "destructive",
-                    });
-                  });
-                }}
-              >
-                <Trash2 />
-              </Button>
-            </div>
+          <Card key={cartItem.productId} className="flex gap-4 p-4">
+            <h3>{cartItem.productName}</h3>
+            <p>{cartItem.productDesc}</p>
+            <p>{cartItem.productPrice}</p>
+            <p>{cartItem.quantity}</p>
+            <Image
+              src={cartItem.productImg}
+              alt={cartItem.productName}
+              width={50}
+              height={50}
+            />
+            <Button
+              size={"icon"}
+              variant={"destructive"}
+              onClick={() => handleDeleteItem(cartItem.productId)}
+            >
+              <Trash2 />
+            </Button>
           </Card>
         ))}
+      </div>
+      <div>
+        <Button
+          size={"default"}
+          variant={"destructive"}
+          onClick={handleDeleteCart}
+        >
+          Очистить
+        </Button>
       </div>
     </div>
   );

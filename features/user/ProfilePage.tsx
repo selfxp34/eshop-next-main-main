@@ -11,6 +11,7 @@ export default function ProfilePage() {
         <p className="font-normal">Avatar</p>
       ) : (
         <Avatar>
+          ;
           <AvatarImage
             src={user?.image ?? undefined}
             alt={user?.name ?? undefined}

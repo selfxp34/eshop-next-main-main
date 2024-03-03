@@ -32,11 +32,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <AppBar />
+          <div className="mt-5 flex gap-2 ml-24">
+            <Menu />
+          </div>
           <Carusel />
           <main className="container py-6">{children}</main>
         </Providers>
-        <Menu />
-
         <Footer />
         <ScrollButton />
         <Toaster />
