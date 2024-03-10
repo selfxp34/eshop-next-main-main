@@ -5,7 +5,15 @@ import { signIn, useSession, signOut } from "next-auth/react";
 import { ThemeToggler } from "@/components/ThemeToggler";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
-import { Heart, ShoppingCart } from "lucide-react";
+import {
+  Heart,
+  MenuIcon,
+  PackageSearch,
+  ShoppingCart,
+  User,
+  UserCheck,
+  UserRoundCheck,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
@@ -16,6 +24,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 
 export default function AppBarAuth() {
   const session = useSession();
@@ -23,15 +40,78 @@ export default function AppBarAuth() {
 
   if (session.data?.user) {
     return (
-      <div className="flex gap-4">
-        <Button
-          size={"icon"}
-          onClick={() => {
-            router.push("/favorites");
-          }}
-        >
-          <Heart />
-        </Button>
+      <div className="flex justify-end gap-4 ">
+        <Drawer>
+          <DrawerTrigger asChild>
+            <Button size={"icon"}>
+              <UserRoundCheck />
+            </Button>
+          </DrawerTrigger>
+          <DrawerContent>
+            <div className="mx-auto w-full max-w-sm ">
+              <DrawerHeader>
+                <DrawerDescription>
+                  <p className="flex justify-center mb-3">
+                    <Avatar>
+                      <AvatarImage
+                        src={session.data.user.image ?? undefined}
+                        alt={session.data.user.name ?? undefined}
+                      />
+                    </Avatar>
+                  </p>
+                  <p className="flex justify-center">
+                    Добро пожаловать! {session.data.user.name}
+                  </p>
+                </DrawerDescription>
+              </DrawerHeader>
+
+              <div className="p-4 pb-0 ">
+                <nav>
+                  <ul className="flex  flex-col gap-3 justify-center mb-4">
+                    <li>
+                      <DrawerClose asChild>
+                        <Link href={"/profile"} className="flex gap-3">
+                          <User />
+                          Профиль
+                        </Link>
+                      </DrawerClose>
+                    </li>
+                    <li>
+                      <DrawerClose asChild>
+                        <Link href={"/cart"} className="flex gap-3">
+                          <ShoppingCart />
+                          Корзина
+                        </Link>
+                      </DrawerClose>
+                    </li>
+                    <li>
+                      <DrawerClose asChild>
+                        <Link href={"/favorites"} className="flex gap-2">
+                          <Heart />
+                          Избранное
+                        </Link>
+                      </DrawerClose>
+                    </li>
+                    <li>
+                      <DrawerClose asChild>
+                        <Link href={"/profile"} className="flex gap-2">
+                          <PackageSearch />
+                          Заказы
+                        </Link>
+                      </DrawerClose>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button onClick={() => signOut()}>Выйти</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </div>
+          </DrawerContent>
+        </Drawer>
+
         <Button
           size={"icon"}
           onClick={() => {
@@ -40,26 +120,15 @@ export default function AppBarAuth() {
         >
           <ShoppingCart />
         </Button>
-        <ThemeToggler />
+
+        <Drawer />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar>
-              <AvatarImage
-                src={session.data.user.image ?? undefined}
-                alt={session.data.user.name ?? undefined}
-              />
-              <AvatarFallback>
-                {session.data.user.email
-                  ? session.data.user.email.slice(0, 2).toUpperCase()
-                  : "GO"}
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>Ваш аккаунт</DropdownMenuLabel>
             <DropdownMenuSeparator />
 
             <DropdownMenuItem onClick={() => signOut()}>Выйти</DropdownMenuItem>
+            <DropdownMenuItem></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

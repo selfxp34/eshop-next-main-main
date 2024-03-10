@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
 import Providers from "@/components/Providers";
 import Carusel from "@/components/Carusel";
 import Footer from "@/components/Footer";
 import ScrollButton from "@/components/ScrollButton";
 import AppBar from "@/components/AppBar";
-
-import Link from "next/link";
-import Menu from "@/components/Menu";
-
-import { ToastProvider } from "@radix-ui/react-toast";
 import { Toaster } from "@/components/ui/toaster";
+
+import Logo from "@/components/Logo";
+import LogoName from "@/components/LogoName";
+import { DropdownMenuDemo } from "@/components/DropdownMenuDemo";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+
 // import { NavigationMenu } from "@/components/ui/navigation-menu";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,11 +32,33 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <AppBar />
-          <div className="mt-5 flex gap-2 ml-24">
-            <Menu />
+          <div
+            className=" bg-blue-50 p-2   h-1/2"
+            style={{
+              backgroundImage: 'url("./bg-tel.png")',
+            }}
+          >
+            <AppBar />
+            <div className="flex justify-start p-9">
+              <LogoName />
+              <Logo />
+              <span className="ml-7">
+                <DropdownMenuDemo />
+              </span>
+
+              <Input
+                placeholder="Поиск по сайту"
+                className="ml-6 w-80 text-sm py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <Search className="flex justify-items-center" />
+            </div>
+            <div className="mb-10">
+              <Carusel />
+            </div>
           </div>
-          <Carusel />
+
+          <div className="mt-5 flex gap-2 ml-24"></div>
+
           <main className="container py-6">{children}</main>
         </Providers>
         <Footer />

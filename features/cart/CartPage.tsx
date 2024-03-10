@@ -57,6 +57,7 @@ export default function CartPage() {
         toast({
           title: "Success",
           description: "Item removed from cart",
+          variant: "destructive",
         });
       })
       .catch((error) => {
@@ -112,40 +113,68 @@ export default function CartPage() {
     };
   });
 
+  // Вычисление общей суммы товаров в корзине
+  const totalAmount = formattedCart.reduce(
+    (prev, curr) => prev + curr.productPrice * curr.quantity,
+    0
+  );
+
+  const totalQuantity = formattedCart.reduce(
+    (prev, curr) => prev + curr.quantity,
+    0
+  );
+
   return (
-    <div>
-      <h2>Cart</h2>
-      <div className="flex flex-col gap-4">
-        {formattedCart.map((cartItem) => (
-          <Card key={cartItem.productId} className="flex gap-4 p-4">
-            <h3>{cartItem.productName}</h3>
-            <p>{cartItem.productDesc}</p>
-            <p>{cartItem.productPrice}</p>
-            <p>{cartItem.quantity}</p>
-            <Image
-              src={cartItem.productImg}
-              alt={cartItem.productName}
-              width={50}
-              height={50}
-            />
-            <Button
-              size={"icon"}
-              variant={"destructive"}
-              onClick={() => handleDeleteItem(cartItem.productId)}
-            >
-              <Trash2 />
-            </Button>
-          </Card>
-        ))}
-      </div>
-      <div>
-        <Button
-          size={"default"}
-          variant={"destructive"}
-          onClick={handleDeleteCart}
-        >
-          Очистить
-        </Button>
+    <div className="flex">
+      <div className="w-3/4">
+        <div>
+          <h2 className="text-2xl p-3">Корзина</h2>
+          <div className="flex flex-col gap-1">
+            {formattedCart.map((cartItem) => (
+              <Card
+                key={cartItem.productId}
+                className="flex flex-col md:flex-row gap-2 p-4"
+              >
+                <div className="flex items-center">
+                  <Image
+                    src={cartItem.productImg}
+                    alt={cartItem.productName}
+                    width={170}
+                    height={170}
+                  />
+                </div>
+                <div className="flex flex-col flex-grow">
+                  <div>
+                    <h3>{cartItem.productName}</h3>
+                    <p>{cartItem.productPrice}$</p>
+                    <p>{cartItem.quantity}</p>
+                  </div>
+                  <div className="flex justify-end mt-4 cursor-pointer">
+                    <Trash2
+                      className="transition-transform duration-500 ease hover:-translate-y-1 hover:scale-110 "
+                      onClick={() => handleDeleteItem(cartItem.productId)}
+                    />
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+          <div className="flex flex-col p-4">
+            <div className="flex justify-between">
+              <h2 className="text-sm p-3">Товаров: {totalQuantity}</h2>
+              <h2 className="text-sm p-3">Итого: {totalAmount}$</h2>
+            </div>
+            <div className="flex justify-end mt-4">
+              <Button
+                size={"default"}
+                variant={"destructive"}
+                onClick={handleDeleteCart}
+              >
+                Очистить
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
