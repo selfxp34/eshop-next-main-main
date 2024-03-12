@@ -1,6 +1,7 @@
 import AppBarAuth from "@/features/user/AppBarAuth";
 import React from "react";
 import { MainMenu } from "./MainMenu";
+import Logo from "./Logo";
 export default function AppBar() {
   return (
     <header
@@ -12,6 +13,9 @@ export default function AppBar() {
     >
       <div className="mt-6 ">
         <MainMenu />
+      </div>
+      <div className="mr-3">
+        <Logo />
       </div>
       <AppBarAuth />
       <nav></nav>

@@ -1,7 +1,13 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as React from "react";
-import { User, ShoppingCart, Heart, PackageSearch } from "lucide-react";
+import {
+  User,
+  ShoppingCart,
+  Heart,
+  PackageSearch,
+  PhoneForwarded,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -27,84 +33,92 @@ export function MainMenu() {
   // Проверяем, есть ли активная сессия пользователя
   const isUserLoggedIn = session.data?.user;
   return (
-    <Drawer>
-      {isUserLoggedIn ? null : (
-        <DrawerTrigger asChild>
-          <Button className="mb-8 ml-33">Войти</Button>
-        </DrawerTrigger>
-      )}
-      <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
-            <DrawerTitle className="text-center mr-3">
-              VOLGA-SHOP.ru
-            </DrawerTitle>
-            <DrawerDescription className="text-center mr-3">
-              Войдете через социальные сети
-            </DrawerDescription>
-          </DrawerHeader>
-          <div className="p-4 pb-0">
-            <nav>
-              <ul className="flex flex-col gap-3">
-                <li>
-                  <DrawerClose asChild></DrawerClose>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          <DrawerFooter>
-            <div className="image-links cursor-pointer">
-              <a onClick={() => signIn()}>
-                <Image
-                  className="mr-11"
-                  src="/google-logo.svg"
-                  alt="Моё изображение"
-                  width={50}
-                  height={50}
-                />
-              </a>
-              <a onClick={() => signIn()}>
-                <Image
-                  className="mr-11"
-                  src="/vk-logo.svg"
-                  alt="Моё изображение"
-                  width={46}
-                  height={46}
-                />
-              </a>
-              <a onClick={() => signIn()}>
-                <Image
-                  className="mr-11"
-                  src="/ok-logo.svg"
-                  alt="Моё изображение"
-                  width={46}
-                  height={46}
-                />
-              </a>
-              <a onClick={() => signIn()}>
-                <Image
-                  className="mr-11"
-                  src="/yandex-logo.svg"
-                  alt="Моё изображение"
-                  width={46}
-                  height={46}
-                />
-              </a>
-              <a onClick={() => signIn()}>
-                <Image
-                  className="mr-11"
-                  src="/mail-logo.svg"
-                  alt="Моё изображение"
-                  width={46}
-                  height={46}
-                />
-              </a>
+    <div>
+      <span
+        className="flex  rounded-lg  shadow-md mr-7
+     "
+      >
+        <PhoneForwarded className="  mr-4 mt-1" /> 80322332404
+      </span>
+      <Drawer>
+        {isUserLoggedIn ? null : (
+          <DrawerTrigger asChild>
+            <Button className="mr-12 ">Войти</Button>
+          </DrawerTrigger>
+        )}
+        <DrawerContent>
+          <div className="mx-auto w-full max-w-sm">
+            <DrawerHeader>
+              <DrawerTitle className="text-center mr-3">
+                VOLGA-SHOP.ru
+              </DrawerTitle>
+              <DrawerDescription className="text-center mr-3">
+                Войдете через социальные сети
+              </DrawerDescription>
+            </DrawerHeader>
+            <div className="p-4 pb-0">
+              <nav>
+                <ul className="flex flex-col gap-3">
+                  <li>
+                    <DrawerClose asChild></DrawerClose>
+                  </li>
+                </ul>
+              </nav>
             </div>
-            <DrawerClose asChild></DrawerClose>
-          </DrawerFooter>
-        </div>
-      </DrawerContent>
-    </Drawer>
+
+            <DrawerFooter>
+              <div className="image-links cursor-pointer">
+                <a onClick={() => signIn()}>
+                  <Image
+                    className="mr-11"
+                    src="/google-logo.svg"
+                    alt="Моё изображение"
+                    width={50}
+                    height={50}
+                  />
+                </a>
+                <a onClick={() => signIn()}>
+                  <Image
+                    className="mr-11"
+                    src="/vk-logo.svg"
+                    alt="Моё изображение"
+                    width={46}
+                    height={46}
+                  />
+                </a>
+                <a onClick={() => signIn()}>
+                  <Image
+                    className="mr-11"
+                    src="/ok-logo.svg"
+                    alt="Моё изображение"
+                    width={46}
+                    height={46}
+                  />
+                </a>
+                <a onClick={() => signIn()}>
+                  <Image
+                    className="mr-11"
+                    src="/yandex-logo.svg"
+                    alt="Моё изображение"
+                    width={46}
+                    height={46}
+                  />
+                </a>
+                <a onClick={() => signIn()}>
+                  <Image
+                    className="mr-11"
+                    src="/mail-logo.svg"
+                    alt="Моё изображение"
+                    width={46}
+                    height={46}
+                  />
+                </a>
+              </div>
+              <DrawerClose asChild></DrawerClose>
+            </DrawerFooter>
+          </div>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+import ShowFullItem from "@/components/ShowFullItem";
 import Catalog from "@/features/product/Catalog";
 import { Suspense } from "react";
 

@@ -13,6 +13,7 @@ import LogoName from "@/components/LogoName";
 import { DropdownMenuDemo } from "@/components/DropdownMenuDemo";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // import { NavigationMenu } from "@/components/ui/navigation-menu";
 
@@ -33,25 +34,26 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <div
-            className=" bg-blue-50 p-2   h-1/2"
+            className="bg-blue-50 p-2 h-1/2"
             style={{
               backgroundImage: 'url("./bg-tel.png")',
             }}
           >
+            <LogoName />
             <AppBar />
-            <div className="flex justify-start p-9">
-              <LogoName />
-              <Logo />
-              <span className="ml-7">
-                <DropdownMenuDemo />
-              </span>
-
-              <Input
-                placeholder="Поиск по сайту"
-                className="ml-6 w-80 text-sm py-2 px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <Search className="flex justify-items-center" />
+            <div className="flex   p-2 md:p-9">
+              <div className="flex items-center m-1">
+                <div className="flex items-center">
+                  <Input
+                    placeholder="Поиск по сайту"
+                    className=" text-sm  px-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+              <span className="ml-7 row-auto"></span> <DropdownMenuDemo />
+              <div className="flex flex-col items-center mt-2 md:flex-row md:items-center"></div>
             </div>
+
             <div className="mb-10">
               <Carusel />
             </div>

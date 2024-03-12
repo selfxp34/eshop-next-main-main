@@ -147,11 +147,11 @@ export default function CartPage() {
                   <div>
                     <h3>{cartItem.productName}</h3>
                     <p>{cartItem.productPrice}$</p>
-                    <p>{cartItem.quantity}</p>
                   </div>
-                  <div className="flex justify-end mt-4 cursor-pointer">
+                  <div className="flex justify-end">
+                    <p className="mr-4">{cartItem.quantity}</p>
                     <Trash2
-                      className="transition-transform duration-500 ease hover:-translate-y-1 hover:scale-110 "
+                      className="transition-transform duration-500 ease hover:-translate-y-1 hover:scale-110"
                       onClick={() => handleDeleteItem(cartItem.productId)}
                     />
                   </div>
@@ -160,8 +160,10 @@ export default function CartPage() {
             ))}
           </div>
           <div className="flex flex-col p-4">
-            <div className="flex justify-between">
-              <h2 className="text-sm p-3">Товаров: {totalQuantity}</h2>
+            <div className="flex">
+              <h2 className="text-sm p-3 flex justify-end">
+                Товаров: {totalQuantity}
+              </h2>
               <h2 className="text-sm p-3">Итого: {totalAmount}$</h2>
             </div>
             <div className="flex justify-end mt-4">
