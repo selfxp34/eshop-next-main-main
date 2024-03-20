@@ -11,7 +11,7 @@ import { Product } from "@prisma/client";
 import { BarChart, Star } from "lucide-react";
 import Link from "next/dist/client/link";
 import Image from "next/image";
-import AddToCart from "./AddToCart";
+import AddToCart from "./ProductCartWidget";
 import "./css/Star.css";
 type Props = {
   product: Product;

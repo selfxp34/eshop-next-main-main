@@ -1,6 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/prisma/db";
-import { Cart } from "@prisma/client";
+import { Cart, Favorite } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -10,14 +10,13 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const email = session.user.email;
     const bodySchema = z.object({
-      quantity: z.number().gt(0),
       productId: z.number().gt(0),
     });
     const parsedBody = await bodySchema.safeParseAsync(body);
     if (parsedBody.success) {
-      let cartFromDb: Cart | null = null;
+      let favoriteFromDb: Favorite | null = null;
       try {
-        const cart = await db.cart.findFirst({
+        const favorite = await db.favorite.findFirst({
           where: {
             User: {
               email,
@@ -25,24 +24,16 @@ export async function POST(req: NextRequest) {
             productId: parsedBody.data.productId,
           },
         });
-        if (cart) {
-          cartFromDb = await db.cart.update({
-            where: {
-              id: cart.id,
-            },
-            data: {
-              quantity: cart.quantity + parsedBody.data.quantity,
-            },
-          });
+        if (favorite) {
+          favoriteFromDb = favorite;
         } else
-          cartFromDb = await db.cart.create({
+          favoriteFromDb = await db.favorite.create({
             data: {
               User: {
                 connect: {
                   email,
                 },
               },
-              quantity: parsedBody.data.quantity,
               Product: {
                 connect: {
                   id: parsedBody.data.productId,
@@ -56,10 +47,10 @@ export async function POST(req: NextRequest) {
         });
       }
       return NextResponse.json({
-        cart: cartFromDb,
+        cart: favoriteFromDb,
       });
     }
-    return new Response("Wrong cart data", {
+    return new Response("Wrong favorite data", {
       status: 400,
     });
   }
@@ -72,7 +63,7 @@ export async function GET() {
   const session = await getAuthSession();
   if (session?.user?.email) {
     const email = session.user.email;
-    const cart = await db.cart.findMany({
+    const favorites = await db.favorite.findMany({
       where: {
         User: {
           email,
@@ -83,7 +74,6 @@ export async function GET() {
       },
       select: {
         id: true,
-        quantity: true,
         productId: true,
         userId: true,
         Product: {
@@ -97,8 +87,8 @@ export async function GET() {
         },
       },
     });
-    return NextResponse.json<{ cart: typeof cart }>({
-      cart,
+    return NextResponse.json<{ favorites: typeof favorites }>({
+      favorites,
     });
   }
   return new NextResponse<string>("Auth required", {
@@ -117,7 +107,7 @@ export async function DELETE(req: NextRequest) {
     const parsedBody = await bodySchema.safeParseAsync(body);
     if (parsedBody.success) {
       if (parsedBody.data.productId === undefined) {
-        await db.cart.deleteMany({
+        await db.favorite.deleteMany({
           where: {
             User: {
               email,
@@ -125,10 +115,10 @@ export async function DELETE(req: NextRequest) {
           },
         });
         return NextResponse.json({
-          message: "Cart cleared",
+          message: "favorites cleared",
         });
       }
-      const cart = await db.cart.findFirst({
+      const favorite = await db.favorite.findFirst({
         where: {
           User: {
             email,
@@ -136,67 +126,18 @@ export async function DELETE(req: NextRequest) {
           productId: parsedBody.data.productId,
         },
       });
-      if (!cart) {
-        return new Response("Product not found in cart", {
+      if (!favorite) {
+        return new Response("Product not found in favorite", {
           status: 404,
         });
       }
-      await db.cart.delete({
+      await db.favorite.delete({
         where: {
-          id: cart.id,
+          id: favorite.id,
         },
       });
       return NextResponse.json({
-        message: "Product removed from cart",
-      });
-    }
-  }
-}
-
-export async function PATCH(req: NextRequest) {
-  const session = await getAuthSession();
-  if (session?.user?.email) {
-    const email = session.user.email;
-    const body = await req.json();
-    const bodySchema = z.object({
-      productId: z.number().gt(0),
-      quantity: z.number().gte(0),
-    });
-    const parsedBody = await bodySchema.safeParseAsync(body);
-    if (parsedBody.success) {
-      const cart = await db.cart.findFirst({
-        where: {
-          User: {
-            email,
-          },
-          productId: parsedBody.data.productId,
-        },
-      });
-      if (!cart) {
-        return new Response("Product not found in cart", {
-          status: 404,
-        });
-      }
-      if (parsedBody.data.quantity === 0) {
-        await db.cart.delete({
-          where: {
-            id: cart.id,
-          },
-        });
-        return NextResponse.json({
-          message: "Product removed from cart",
-        });
-      }
-      const updatedCart = await db.cart.update({
-        where: {
-          id: cart.id,
-        },
-        data: {
-          quantity: parsedBody.data.quantity,
-        },
-      });
-      return NextResponse.json({
-        cart: updatedCart,
+        message: "Product removed from favorite",
       });
     }
   }

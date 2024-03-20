@@ -33,14 +33,24 @@ import {
   DrawerHeader,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useGetFavorites } from "../favorites/use-favorites";
 
 export default function AppBarAuth() {
   const session = useSession();
   const router = useRouter();
-
+  const { favorites } = useGetFavorites();
   if (session.data?.user) {
     return (
       <div className="flex justify-end gap-4 ">
+        {favorites && favorites.length > 0 ? (
+          <Button
+            size={"icon"}
+            variant={"secondary"}
+            onClick={() => router.push("/favorites")}
+          >
+            <Heart />
+          </Button>
+        ) : null}
         <Drawer>
           <DrawerTrigger asChild>
             <Button size={"icon"}>
