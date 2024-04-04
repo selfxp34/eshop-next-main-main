@@ -1,9 +1,7 @@
-import {db} from '@/prisma/db';
+import { db } from "@/prisma/db";
+export const dynamic = "force-dynamic";
+export async function GET(req: Request) {
+  const data = await db.product.findMany();
 
-
-export async function GET() {
-
-    const data = await db.product.findMany()
-
-    return Response.json({data})
+  return Response.json({ data });
 }

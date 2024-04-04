@@ -1,7 +1,5 @@
-import React from 'react'
+import FavoritesPage from "@/features/favorites/FavoritePage";
 
 export default function FavoritesPageApp() {
-  return (
-    <div>FavoritesPage</div>
-  )
+  return <FavoritesPage />;
 }

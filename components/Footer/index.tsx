@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-
+import { Mail } from "lucide-react";
 const Footer = () => {
   return (
     <>
-      <footer className="relative z-10 bg-white pt-16 dark:bg-gray-dark md:pt-20 lg:pt-24">
+      <footer className="relative  bg-white pt-16 dark:bg-gray-dark md:pt-20 lg:pt-24 ">
         <div className="container">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-5/12">
@@ -29,7 +29,16 @@ const Footer = () => {
                 <p className=" text-sm mb-9  leading-relaxed text-body-color dark:text-body-color-dark">
                   Лучшие телефоны для тебя - выбирай с уверенностью!
                 </p>
-                <p className="text-sm">Телефон: 80322332404</p>
+                <p className="text-sm text-nowrap ">
+                  &#9743;<span className="ml-2">Телефон: 80322332404</span>
+                </p>
+                <a
+                  href="mailto:volga-shop@mail.ru"
+                  className="text-sm text-nowrap"
+                >
+                  &#9993;
+                  <span className="ml-2">Email: volga-shop@mail.ru</span>
+                </a>
                 <div className="text-sm flex items-center mt-5   ">
                   <span className="mr-3">Мы в соцсетях:</span>
                   <a
@@ -108,14 +117,15 @@ const Footer = () => {
 
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
+                <h2 className="mb-6 text-xl font-bold text-black dark:text-white">
                   Акции и бонусы
                 </h2>
                 <ul>
                   <li>
                     <Link
                       href="/blog"
-                      className="mb-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                      prefetch={false}
+                      className="mb-6 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Акции
                     </Link>
@@ -123,7 +133,7 @@ const Footer = () => {
                   <li>
                     <Link
                       href="/"
-                      className="mb-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                      className="mb-6 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Бонусная программа
                     </Link>
@@ -142,7 +152,7 @@ const Footer = () => {
 
             <div className="w-full px-4 sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12">
               <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
+                <h2 className="mb-6 text-xl font-bold text-black dark:text-white">
                   Услуги
                 </h2>
                 <ul>
@@ -174,16 +184,17 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-3/12">
+            <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-3/12 ">
               <div className="mb-12 lg:mb-16">
-                <h2 className="mb-10 text-xl font-bold text-black dark:text-white">
+                <h2 className="mb-5 text-xl font-bold text-black dark:text-white">
                   О компании
                 </h2>
                 <ul>
                   <li>
                     <Link
                       href="/contact"
-                      className="mb-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                      prefetch={false}
+                      className="mb-5 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Вакансии
                     </Link>
@@ -191,7 +202,7 @@ const Footer = () => {
                   <li>
                     <Link
                       href="/"
-                      className="mb-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                      className="mt-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Контакты
                     </Link>
@@ -199,7 +210,7 @@ const Footer = () => {
                   <li>
                     <Link
                       href="/about"
-                      className="mb-4 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
+                      className="mt-6 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       О компании
                     </Link>
@@ -209,7 +220,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-[#D2D8E183] to-transparent dark:via-[#959CB183]"></div>
+          <div className=" bg-slate-400 sh h-px w-full bg-gradient-to-r from-transparent via-[#D2D8E183] to-transparent dark:via-[#959CB183]"></div>
           <div className="py-8">
             <p className="text-center text-base text-body-color dark:text-white">
               Волгоград 2024

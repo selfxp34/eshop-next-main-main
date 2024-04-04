@@ -1,23 +1,24 @@
 import AppBarAuth from "@/features/user/AppBarAuth";
-import Link from "next/link";
 import React from "react";
+import { MainMenu } from "./MainMenu";
 import Logo from "./Logo";
-import LogoName from "./LogoName";
-
 export default function AppBar() {
   return (
     <header
-      className="flex gap-4 justify-between items-center h-16 px-4 shadow-md
-     shadow-slate-600 dark:shadow-slate-100"
+      className="flex  rounded-lg  justify-end items-center h-25 px-4 shadow-md
+     p-4"
+      style={{
+        backgroundImage: 'url("./bg-tel.png")',
+      }}
     >
-      <Logo />
-      <LogoName />
-      <nav>
-        <Link href={"/"} className="">
-          Main page
-        </Link>
-      </nav>
+      <div className="mt-6 ">
+        <MainMenu />
+      </div>
+      <div className="mr-3">
+        <Logo />
+      </div>
       <AppBarAuth />
+      <nav></nav>
     </header>
   );
 }

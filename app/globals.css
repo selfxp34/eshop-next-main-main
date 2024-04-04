@@ -71,12 +71,57 @@
     @apply border-border;
   }
 
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+  }
+
   body {
     @apply bg-background text-foreground;
+    display: flex;
+    flex-direction: column;
   }
 }
 
-
 nav ul li a.active {
   font-weight: bold;
+}
+
+
+footer {
+  width: 100%;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+}
+
+
+.image-links {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.image-links a {
+  margin-right: 10px;
+}
+
+.image-links a:last-child {
+  margin-right: 0;
 }
