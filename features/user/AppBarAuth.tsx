@@ -104,7 +104,7 @@ export default function AppBarAuth() {
                     </li>
                     <li>
                       <DrawerClose asChild>
-                        <Link href={"/profile"} className="flex gap-2">
+                        <Link href={"/orders"} className="flex gap-2">
                           <PackageSearch />
                           Заказы
                         </Link>

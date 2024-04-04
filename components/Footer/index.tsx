@@ -124,6 +124,7 @@ const Footer = () => {
                   <li>
                     <Link
                       href="/blog"
+                      prefetch={false}
                       className="mb-6 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Акции
@@ -192,6 +193,7 @@ const Footer = () => {
                   <li>
                     <Link
                       href="/contact"
+                      prefetch={false}
                       className="mb-5 inline-block text-xs text-body-color duration-300 hover:text-primary dark:text-body-color-dark dark:hover:text-primary"
                     >
                       Вакансии

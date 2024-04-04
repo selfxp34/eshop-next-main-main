@@ -2,6 +2,7 @@ import { db } from "@/prisma/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { AuthOptions, getServerSession } from "next-auth";
 import Google from "next-auth/providers/google";
+import VkProvider from "next-auth/providers/vk";
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(db),

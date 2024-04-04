@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import CartClearDialog from "./CartClearDialog";
 import { Skeleton } from "@/components/skeleton";
+import CreateOrderDialog from "../order/CreateOrdeDialog";
 
 export default function CartPage() {
   const { mutate: addToCart } = useAddToCart();
@@ -110,6 +111,7 @@ export default function CartPage() {
               width={50}
               height={50}
               className="mr-auto"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, (max-width: 1536px) 25vw, 20vw"
             />
             <button
               className="bg-transparent border-none"
@@ -125,15 +127,7 @@ export default function CartPage() {
         ))}
       </div>
       <div className="w-full flex items-center justify-end mt-8 gap-4">
-        <Button
-          onClick={() => {
-            // router.push("/");
-          }}
-          className="flex items-center gap-2"
-        >
-          Buy
-          <Wallet />
-        </Button>
+        <CreateOrderDialog />
         <CartClearDialog
           onClear={() => {
             removeFromCart({});

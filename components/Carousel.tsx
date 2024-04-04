@@ -8,7 +8,7 @@ export default function Carusel() {
   return (
     <div>
       <Carousel>
-        <CarouselContent className="flex items-center ">
+        <CarouselContent className="flex items-center -ml-2 mt-9">
           <CarouselItem className="basis-1/5">
             <Link href="./catalog/iphone">
               <Image
@@ -19,6 +19,7 @@ export default function Carusel() {
               />
             </Link>
           </CarouselItem>
+
           <CarouselItem className="basis-1/5">
             <Link href="./catalog/samsung">
               <Image

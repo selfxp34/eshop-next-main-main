@@ -20,10 +20,10 @@ type Props = {
 export default function ProductCard({ product }: Props) {
   return (
     <Card
-      className="dark:hover:bg-sky-700 hover:bg-slate-200 transition-transform hover:-translate-y-1  "
+      className="dark:hover:bg-sky-700 hover:bg-slate-200 transition-transform hover:-translate-y-1 relative pt-32 pb-16"
       key={product.id}
     >
-      <CardHeader className="flex items-center  justify-between">
+      <CardHeader className="flex items-center  justify-between absolute top-0">
         <div className="">
           <CardTitle className="text-sm mt-2">
             <Link href={"/product/" + product.id}>{product.name}</Link>
@@ -50,11 +50,12 @@ export default function ProductCard({ product }: Props) {
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      {/* <CardContent className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2"> */}
+      <CardContent className="py-0">
         <Image src={product.img} alt={product.name} width={200} height={400} />
       </CardContent>
       <CardContent>{product.price}$</CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between absolute bottom-0">
         <AddToCart product={product} />
       </CardFooter>
     </Card>

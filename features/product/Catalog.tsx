@@ -1,17 +1,33 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { db } from "@/prisma/db";
+import Filter from "../filters/Filter";
 
 // import {setTimeout as wait} from 'node:timers/promises' // искуственная задержка, только на сервере
 
-export default async function Catalog() {
-  const catalog = await db.product.findMany();
+export default async function Catalog({
+  searchParams,
+}: {
+  searchParams?: {
+    manufacturer?: string;
+  };
+}) {
   // await wait(2000)
+  console.log(searchParams);
+  const catalog =
+    searchParams?.manufacturer && searchParams?.manufacturer !== "0"
+      ? await db.product.findMany({
+          where: {
+            manufacturerId: parseInt(searchParams.manufacturer),
+          },
+        })
+      : await db.product.findMany();
   return (
     <div>
       <h2 className="text-2xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
         Смартфоны в Волгограде
       </h2>
+      <Filter />
       <h4 className="text-1xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
         Ледеры продаж
       </h4>

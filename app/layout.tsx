@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
-import Carusel from "@/components/Carusel";
+
 import Footer from "@/components/Footer";
 import ScrollButton from "@/components/ScrollButton";
 import AppBar from "@/components/AppBar";
@@ -14,6 +14,7 @@ import { DropdownMenuDemo } from "@/components/DropdownMenuDemo";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Carusel from "@/components/Carousel";
 
 // import { NavigationMenu } from "@/components/ui/navigation-menu";
 
@@ -31,6 +32,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta
+        name="google-site-verification"
+        content="EXibeSczwJN_4jXyyWcf7TdYabhR8HTPEsgj4CdzWkk"
+      />
       <body className={inter.className}>
         <Providers>
           <div
@@ -41,6 +46,7 @@ export default function RootLayout({
           >
             <LogoName />
             <AppBar />
+            <Carusel />
             <div className="flex   p-2 md:p-9">
               <div className="flex items-center m-1">
                 <div className="flex items-center">
@@ -54,9 +60,7 @@ export default function RootLayout({
               <div className="flex flex-col items-center mt-2 md:flex-row md:items-center"></div>
             </div>
 
-            <div className="mb-10">
-              <Carusel />
-            </div>
+            <div className="mb-10"></div>
           </div>
 
           <div className="mt-5 flex gap-2 ml-24"></div>
