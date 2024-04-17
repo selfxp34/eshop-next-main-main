@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
@@ -72,7 +73,6 @@ export default function CartPage() {
   return (
     <div>
       <h2 className="text-2xl mb-5">Корзина</h2>
-
       <div className="flex flex-col gap-4 mb-4">
         {formattedCart.map((cartItem) => (
           <Card key={cartItem.productId} className="text-sm">
@@ -132,7 +132,6 @@ export default function CartPage() {
           </Card>
         ))}
       </div>
-
       <div className="w-full flex items-center justify-end mt-8 gap-4">
         <CreateOrderDialog />
         <CartClearDialog

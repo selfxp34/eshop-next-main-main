@@ -1,13 +1,11 @@
-import React from 'react'
+import React from "react";
 
 type Props = {
   params: {
-    productId: string
-  }
-}
+    productId: string;
+  };
+};
 
 export default function ProductPage({ params }: Props) {
-  return (
-    <div>Product {params.productId}</div>
-  )
+  return <div>Product {params.productId}</div>;
 }

@@ -15,3 +15,19 @@ Cookie: next-auth.session-token=9a0d8a4e-4fe3-4d26-8719-fc50c319e9b0
 
 GET  http://localhost:3000/api/cart
 Cookie: next-auth.session-token=9a0d8a4e-4fe3-4d26-8719-fc50c319e9b0
+
+
+
+###
+POST http://localhost:3000/api/rating
+Content-Type: application/json
+Cookie: next-auth.session-token=0c54639e-2d10-4b6b-945c-c60e8b75170a
+
+{
+    "productId": 14,
+    "rating": 4
+}
+
+###
+GET http://localhost:3000/api/rating
+Cookie: next-auth.session-token=0c54639e-2d10-4b6b-945c-c60e8b75170a

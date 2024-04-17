@@ -25,11 +25,11 @@ export default async function Catalog({
   return (
     <div>
       <h2 className="text-2xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
-        Смартфоны в Волгограде
+        Сувениры из Волгограда
       </h2>
       <Filter />
       <h4 className="text-1xl text-black dark:text-slate-300  pt-3 mb-6 flex text-start ">
-        Ледеры продаж
+        Популярное
       </h4>
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ">

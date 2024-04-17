@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/drawer";
 import { useGetFavorites } from "../favorites/use-favorites";
 import TotalCartItems from "@/components/TotalCartItems";
+import RatingComponent from "../ratingStars/RatingComponent";
 
 export default function AppBarAuth() {
   const session = useSession();

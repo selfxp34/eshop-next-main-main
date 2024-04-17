@@ -1,6 +1,6 @@
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/prisma/db";
-import { Cart, Favorite } from "@prisma/client";
+import { Cart, Favorites } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -14,9 +14,9 @@ export async function POST(req: NextRequest) {
     });
     const parsedBody = await bodySchema.safeParseAsync(body);
     if (parsedBody.success) {
-      let favoriteFromDb: Favorite | null = null;
+      let favoriteFromDb: Favorites | null = null;
       try {
-        const favorite = await db.favorite.findFirst({
+        const favorite = await db.favorites.findFirst({
           where: {
             User: {
               email,
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         if (favorite) {
           favoriteFromDb = favorite;
         } else
-          favoriteFromDb = await db.favorite.create({
+          favoriteFromDb = await db.favorites.create({
             data: {
               User: {
                 connect: {
@@ -63,7 +63,7 @@ export async function GET() {
   const session = await getAuthSession();
   if (session?.user?.email) {
     const email = session.user.email;
-    const favorites = await db.favorite.findMany({
+    const favorites = await db.favorites.findMany({
       where: {
         User: {
           email,
@@ -107,7 +107,7 @@ export async function DELETE(req: NextRequest) {
     const parsedBody = await bodySchema.safeParseAsync(body);
     if (parsedBody.success) {
       if (parsedBody.data.productId === undefined) {
-        await db.favorite.deleteMany({
+        await db.favorites.deleteMany({
           where: {
             User: {
               email,
@@ -118,7 +118,7 @@ export async function DELETE(req: NextRequest) {
           message: "favorites cleared",
         });
       }
-      const favorite = await db.favorite.findFirst({
+      const favorite = await db.favorites.findFirst({
         where: {
           User: {
             email,
@@ -131,7 +131,7 @@ export async function DELETE(req: NextRequest) {
           status: 404,
         });
       }
-      await db.favorite.delete({
+      await db.favorites.delete({
         where: {
           id: favorite.id,
         },
